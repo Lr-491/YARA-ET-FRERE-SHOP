@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceuil | Electronique shop</title>
+
+    <!--Link style  -->
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <a href="index.html" class="logo">
+            <span class="logo__icon">🖥</span>
+            <span class="logo__text">YARA SHOP</span>
+        </a>
+
+        <nav class="nav">
+            <div class="nav__menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link active">Accueil</a></li>
+                    <li class="nav__item"><a href="./pages/shop.html" class="nav__link">Boutique</a></li>
+                    <li class="nav__item"><a href="./pages/about.html" class="nav__link">À propos</a></li>
+                </ul>
+                <a href="./pages/shop.html" class="header__cta">Commander</a>
+            </div>
+
+            <button class="nav__toggle" id="nav-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+
+        <div class="nav__overlay" id="nav-overlay"></div>
+    </header>
+
+    <main>
+        <!-- SECTION HERO -->
+        <section class="hero">
+            <div class="hero-content">
+                <!-- Slides -->
+                <div class="slider">
+                    <div class="cont-slides">
+                        <!-- FIRST SLIDE -->
+                        <div class="first__slide ">
+                            <div class="content active">
+                                <div class="content__1">
+                                    <div class="info">
+                                        <h2> <span>HP</span> ProBook 450</h2>
+                                        <p>COR I3, 256GB SSD, RAM 8GB, 15,6"</p>
+                                        <!-- CTA -->
+                                        <a href="./pages/shop.html"><button class="cta">Commander maintenant</button></a>
+                                    </div>
+                                    <img src="./images/HP/44.png" alt="HP proBook">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- SECOND SLIDE -->
+                        <div class="second__slide">
+                            <div class="content">
+                                <div class="content__2">
+                                    <div class="info">
+                                        <h2> <span>HP</span> ProBook 640 G1</h2>
+                                        <p>COR I3, 256GB SSD, RAM 8GB, 15,6"</p>
+                                        <!-- CTA -->
+                                        <a href="./pages/shop.html"><button class="cta">Commander maintenant</button></a>
+                                    </div>
+                                    <img src="./images/HP/39.png" alt="HP ProBook 640 G1">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- FIRD SLIDE -->
+                        <div class="fird__slide">
+                            <div class="content">
+                                <div class="content__3">
+                                    <div class="info">
+                                        <h2> <span>ALL in ONE</span></h2>
+                                        <p>COR I3, 256GB SSD, RAM 8GB, </p>
+                                        <!-- CTA -->
+                                        <a href="./pages/shop.html"><button class="cta">Commander maintenant</button></a>
+                                    </div>
+                                    <img src="./images/all_in_one/36.png" alt="ALL in ONE">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- COMMANDE BUTTONS -->
+                    <div class="commandes">
+                        <!-- LEFT BUTTON -->
+                        <button class="left">◀</button>
+                        <!-- RIGHT BUTTON -->
+                        <button class="right">▶</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--=============== BANNIÈRE ===============-->
+        <section class="baniere">
+            <h1 class="title">YALA SERVICES SHOP</h1>
+            <p class="para1">La qualité branchée sur l'excellence</p>
+            <p class="para2">
+                Découvrez nos produits soigneusement sélectionnés pour répondre à vos besoins.
+                Commandez dès maintenant et profitez de la qualité Yalla Service, livrée directement chez vous !
+            </p>
+            <button class="btn">
+                <a href="./pages/shop.html">Commander</a>
+            </button>
+        </section>
+
+        <!-- PRODUITS PHARES -->
+        <section class="featured">
+            <h2 class="section-title">Nos Produits Phares</h2>
+            <p class="section-subtitle">Découvrez une sélection de nos meilleurs ordinateurs</p>
+            <div class="featured-grid">
+                <article class="featured-card">
+                    <div class="featured-img">
+                        <img src="./images/HP/450/2.jpg" alt="HP ProBook 450">
+                    </div>
+                    <div class="featured-info">
+                        <h3>HP ProBook 450</h3>
+                        <p>Core i3, 256GB SSD, RAM 8GB, écran 15,6"</p>
+                        <a href="./pages/shop.html" class="featured-link">Voir le produit →</a>
+                    </div>
+                </article>
+                <article class="featured-card">
+                    <div class="featured-img">
+                        <img src="./images/HP/640/1.jpg" alt="HP ProBook 640">
+                    </div>
+                    <div class="featured-info">
+                        <h3>HP ProBook 640</h3>
+                        <p>Performance et mobilité pour professionnels</p>
+                        <a href="./pages/shop.html" class="featured-link">Voir le produit →</a>
+                    </div>
+                </article>
+                <article class="featured-card">
+                    <div class="featured-img">
+                        <img src="./images/all_in_one/31.png" alt="All in One">
+                    </div>
+                    <div class="featured-info">
+                        <h3>PC All in One</h3>
+                        <p>Écran intégré, design compact et élégant</p>
+                        <a href="./pages/shop.html" class="featured-link">Voir le produit →</a>
+                    </div>
+                </article>
+            </div>
+            <a href="./pages/shop.html" class="btn-featured">Voir toute la boutique</a>
+        </section>
+
+        <!-- POURQUOI NOUS CHOISIR -->
+        <section class="advantages">
+            <h2 class="section-title">Pourquoi Nous Choisir</h2>
+            <div class="advantages-grid">
+                <div class="advantage-card">
+                    <div class="advantage-icon">✓</div>
+                    <h3>Qualité garantie</h3>
+                    <p>Produits soigneusement sélectionnés et testés pour vous garantir la meilleure qualité.</p>
+                </div>
+                <div class="advantage-card">
+                    <div class="advantage-icon">🚚</div>
+                    <h3>Livraison rapide</h3>
+                    <p>Livraison directe chez vous partout au pays. Rapidité et sécurité assurées.</p>
+                </div>
+                <div class="advantage-card">
+                    <div class="advantage-icon">💬</div>
+                    <h3>Support client</h3>
+                    <p>Une équipe à votre écoute via WhatsApp pour répondre à toutes vos questions.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>YALA SERVICES SHOP</h4>
+                <p>La qualité branchée sur l'excellence. Votre partenaire en informatique.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navigation</h4>
+                <a href="index.html">Accueil</a>
+                <a href="./pages/shop.html">Boutique</a>
+                <a href="./pages/about.html">À propos</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>Commandez via WhatsApp</p>
+                <a href="https://wa.me/2250000000000" target="_blank" rel="noopener" class="footer-whatsapp">📱 Nous contacter</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 YALA SERVICES SHOP. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        const imgs = document.querySelectorAll('.cont-slides .content');
+        const next = document.querySelector('.right');
+        const prev = document.querySelector('.left');
+        let index = 0;
+
+        function nextSlide() {
+            imgs[index].classList.remove('active');
+            index = index >= 2 ? 0 : index + 1;
+            imgs[index].classList.add('active');
+        }
+
+        function prevSlide() {
+            imgs[index].classList.remove('active');
+            index = index <= 0 ? 2 : index - 1;
+            imgs[index].classList.add('active');
+        }
+
+        prev.addEventListener('click', prevSlide);
+        next.addEventListener('click', nextSlide);
+    </script>
+    <script src="./js/nav.js"></script>
+</body>
+</html>

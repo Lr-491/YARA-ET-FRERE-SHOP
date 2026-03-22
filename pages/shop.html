@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHOP | Electroniaue Shop</title>
+
+    <!--Link style  -->
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <main>
+        <header class="header" id="header">
+            <a href="../index.html" class="logo">
+                <span class="logo__icon">🖥</span>
+                <span class="logo__text">YARA SHOP</span>
+            </a>
+
+            <nav class="nav">
+                <div class="nav__menu">
+                    <ul class="nav__list">
+                        <li class="nav__item"><a href="../index.html" class="nav__link">Accueil</a></li>
+                        <li class="nav__item"><a href="./shop.html" class="nav__link active">Boutique</a></li>
+                        <li class="nav__item"><a href="./about.html" class="nav__link">À propos</a></li>
+                    </ul>
+                    <a href="./shop.html" class="header__cta">Commander</a>
+                </div>
+
+                <button class="nav__toggle" id="nav-toggle" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+
+            <div class="nav__overlay" id="nav-overlay"></div>
+        </header>
+        <!-- Modal Section -->
+        <section class="modal hidden" id="modal">
+            <div class="modal__content modal__content--product">
+                <span class="close__btn" id="closeModalBtn">&times;</span>
+                <h2 id="modal__title"></h2>
+                <div class="modal__gallery">
+                    <div class="modal__main-image" id="modal__main-image"></div>
+                    <div class="modal__thumbnails" id="modal__thumbnails"></div>
+                </div>
+                <p class="modal__description" id="modal__description"></p>
+                <div class="modal__quantity">
+                    <label>Quantité :</label>
+                    <input type="number" min="1" value="1" id="modalQty">
+                </div>
+                <div class="modal__actions">
+                    <a href="#" class="btn-order modal__whatsapp" id="modalWhatsappBtn" target="_blank" rel="noopener">
+                        📱 Commander via WhatsApp
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product section -->
+        <section class="product">
+            <div>
+                <h1>Nos Produits</h1>
+                <section class="search__input">
+                    <input type="text" class="search" id="searchInput" placeholder="Rechercher un produit">
+                </section>
+            </div>
+            <!-- Display product -->
+            <div id="product-container" class="product-container"></div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>YALA SERVICES SHOP</h4>
+                <p>La qualité branchée sur l'excellence. Votre partenaire en informatique.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navigation</h4>
+                <a href="../index.html">Accueil</a>
+                <a href="./shop.html">Boutique</a>
+                <a href="./about.html">À propos</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>Commandez via WhatsApp</p>
+                <a href="https://wa.me/2250000000000" target="_blank" rel="noopener" class="footer-whatsapp">📱 Nous contacter</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 YALA SERVICES SHOP. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/nav.js"></script>
+    <script>
+        const container = document.getElementById("product-container");
+        const modal = document.getElementById("modal");
+        const modalTitle = document.getElementById("modal__title");
+        const modalMainImage = document.getElementById("modal__main-image");
+        const modalThumbnails = document.getElementById("modal__thumbnails");
+        const modalDescription = document.getElementById("modal__description");
+        const modalWhatsappBtn = document.getElementById("modalWhatsappBtn");
+        let currentProductIndex = 0;
+
+        // Génère le lien WhatsApp avec le produit et la quantité
+        function getWhatsAppLink(product, quantity) {
+            const priceText = product.price ? product.price.toLocaleString() + " FCFA" : "Sur devis";
+            const message = `Bonjour, je souhaite commander :%0A%0A*Produit :* ${product.title}%0A*Quantité :* ${quantity}%0A*Prix :* ${priceText}%0A%0AMerci !`;
+            return `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+        }
+
+        function orderProduct(index) {
+            const product = data[index];
+            const qtyInput = document.getElementById(`qty${index}`);
+            const quantity = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
+            const url = getWhatsAppLink(product, quantity);
+            window.open(url, "_blank", "noopener,noreferrer");
+        }
+
+        function openModal(product, index) {
+            currentProductIndex = index;
+            modalTitle.textContent = product.title;
+
+            // Galerie d'aperçus (previews ou ancien format imgs)
+            let previews = product.previews && product.previews.length > 0 
+                ? product.previews 
+                : null;
+            if (!previews && product.imgs && product.imgs.length > 0) {
+                previews = product.imgs
+                    .filter(p => p.img)
+                    .map((p, i) => ({ img: p.img, label: p.shape || "Vue " + (i + 1) }));
+            }
+            if (!previews || previews.length === 0) {
+                previews = [{ img: product.img, label: "Vue 1" }];
+            }
+
+            modalMainImage.innerHTML = `<img src="${previews[0].img}" alt="${product.title}">`;
+
+            modalThumbnails.innerHTML = previews.map((p, i) => `
+                <button type="button" class="modal__thumb ${i === 0 ? "active" : ""}" 
+                    data-img="${p.img}" data-index="${i}">
+                    <img src="${p.img}" alt="${p.label || "Vue " + (i + 1)}">
+                </button>
+            `).join("");
+
+            modalThumbnails.querySelectorAll(".modal__thumb").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const img = btn.dataset.img;
+                    modalMainImage.innerHTML = `<img src="${img}" alt="${product.title}">`;
+                    modalThumbnails.querySelectorAll(".modal__thumb").forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+                });
+            });
+
+            modalDescription.textContent = product.description || "Demandez plus d'informations.";
+            const qtyInput = document.getElementById("modalQty");
+            qtyInput.value = 1;
+            qtyInput.oninput = () => {
+                const qty = parseInt(qtyInput.value) || 1;
+                modalWhatsappBtn.href = getWhatsAppLink(product, qty);
+            };
+            modalWhatsappBtn.href = getWhatsAppLink(product, 1);
+            modal.classList.remove("hidden");
+        }
+
+        function closeModal() {
+            modal.classList.add("hidden");
+        }
+
+        function displayProduct(products) {
+            container.innerHTML = "";
+
+            products.forEach((product, index) => {
+                const priceDisplay = product.price ? product.price.toLocaleString() + " FCFA" : "Sur devis";
+                const card = document.createElement("div");
+                card.className = "product-card";
+                card.innerHTML = `
+                    <img src="${product.img}" alt="${product.title}">
+                    <h3>${product.title}</h3>
+                    <h3>${product.model}</h3>
+                    <p>${product.description || ""}</p>
+                    <p class="price">${priceDisplay}</p>
+                    <label>Quantité :</label>
+                    <input type="number" min="1" value="1" id="qty${index}">
+                    <button class="open__modal" data-index="${index}">Voir plus</button>
+                    <a href="#" class="btn-order btn-order--whatsapp" data-index="${index}"> Commander via WhatsApp</a>
+                `;
+                container.appendChild(card);
+            });
+
+            document.querySelectorAll(".open__modal").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const index = parseInt(e.currentTarget.dataset.index);
+                    openModal(products[index], index);
+                });
+            });
+
+            document.querySelectorAll(".btn-order--whatsapp").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const index = parseInt(e.currentTarget.dataset.index);
+                    orderProduct(index);
+                });
+            });
+        }
+
+        displayProduct(data);
+
+        document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+        document.getElementById("modal").addEventListener("click", (e) => {
+            if (e.target.id === "modal") closeModal();
+        });
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("show");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.2 }
+        );
+
+        setTimeout(() => {
+            document.querySelectorAll(".product-card").forEach(card => observer.observe(card));
+        }, 100);
+    </script>
+</body>
+</html>
