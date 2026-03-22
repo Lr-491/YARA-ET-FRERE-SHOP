@@ -14,7 +14,7 @@
     <header class="header" id="header">
         <a href="index.html" class="logo">
             <span class="logo__icon">🖥</span>
-            <span class="logo__text">YARA SHOP</span>
+            <span class="logo__text">YALA SHOP</span>
         </a>
 
         <nav class="nav">
@@ -52,7 +52,7 @@
                                         <h2> <span>HP</span> ProBook 450</h2>
                                         <p>COR I3, 256GB SSD, RAM 8GB, 15,6"</p>
                                         <!-- CTA -->
-                                        <a href="./pages/shop.html"><button class="cta">Commander maintenant</button></a>
+                                        <a href="./pages/shop.html" class="cta-link"><button class="cta">Commander maintenant</button></a>
                                     </div>
                                     <img src="./images/HP/44.png" alt="HP proBook">
                                 </div>
@@ -66,7 +66,7 @@
                                         <h2> <span>HP</span> ProBook 640 G1</h2>
                                         <p>COR I3, 256GB SSD, RAM 8GB, 15,6"</p>
                                         <!-- CTA -->
-                                        <a href="./pages/shop.html"><button class="cta">Commander maintenant</button></a>
+                                        <a href="./pages/shop.html" class="cta-link"><button class="cta">Commander maintenant</button></a>
                                     </div>
                                     <img src="./images/HP/39.png" alt="HP ProBook 640 G1">
                                 </div>
@@ -80,7 +80,7 @@
                                         <h2> <span>ALL in ONE</span></h2>
                                         <p>COR I3, 256GB SSD, RAM 8GB, </p>
                                         <!-- CTA -->
-                                        <a href="./pages/shop.html"><button class="cta">Commander maintenant</button></a>
+                                        <a href="./pages/shop.html" class="cta-link"><button class="cta">Commander maintenant</button></a>
                                     </div>
                                     <img src="./images/all_in_one/36.png" alt="ALL in ONE">
                                 </div>
@@ -89,10 +89,14 @@
                     </div>
                     <!-- COMMANDE BUTTONS -->
                     <div class="commandes">
-                        <!-- LEFT BUTTON -->
-                        <button class="left">◀</button>
-                        <!-- RIGHT BUTTON -->
-                        <button class="right">▶</button>
+                        <button class="left" aria-label="Slide précédent">◀</button>
+                        <button class="right" aria-label="Slide suivant">▶</button>
+                    </div>
+                    <!-- INDICATEURS -->
+                    <div class="slider-dots">
+                        <button class="slider-dot active" data-slide="0" aria-label="Slide 1"></button>
+                        <button class="slider-dot" data-slide="1" aria-label="Slide 2"></button>
+                        <button class="slider-dot" data-slide="2" aria-label="Slide 3"></button>
                     </div>
                 </div>
             </div>
@@ -197,25 +201,34 @@
     </footer>
 
     <script>
-        const imgs = document.querySelectorAll('.cont-slides .content');
+        const slides = document.querySelectorAll('.cont-slides .content');
+        const dots = document.querySelectorAll('.slider-dot');
         const next = document.querySelector('.right');
         const prev = document.querySelector('.left');
         let index = 0;
 
+        function goToSlide(i) {
+            slides[index].classList.remove('active');
+            dots[index].classList.remove('active');
+            index = i;
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+
         function nextSlide() {
-            imgs[index].classList.remove('active');
-            index = index >= 2 ? 0 : index + 1;
-            imgs[index].classList.add('active');
+            goToSlide(index >= 2 ? 0 : index + 1);
         }
 
         function prevSlide() {
-            imgs[index].classList.remove('active');
-            index = index <= 0 ? 2 : index - 1;
-            imgs[index].classList.add('active');
+            goToSlide(index <= 0 ? 2 : index - 1);
         }
 
         prev.addEventListener('click', prevSlide);
         next.addEventListener('click', nextSlide);
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => goToSlide(i));
+        });
     </script>
     <script src="./js/nav.js"></script>
 </body>
