@@ -4,6 +4,7 @@ const WHATSAPP_NUMBER = "2250000000000";
 const data = [
     {
         id: 1,
+        category: "hp",
         title: "HP",
         model: "ProBook 440 G",
         price: "",
@@ -16,6 +17,7 @@ const data = [
     },
     {
         id: 2,
+        category: "hp",
         title: "HP",
         model: "ProBook 450",
         price: "",
@@ -28,6 +30,7 @@ const data = [
     },
     {
         id: 3,
+        category: "hp",
         title: "HP",
         model: "ProBook 640",
         price: "",
@@ -40,6 +43,7 @@ const data = [
     },
     {
         id: 4,
+        category: "hp",
         title: "HP",
         model: "EliteBook",
         price: "",
@@ -53,6 +57,7 @@ const data = [
     },
     {
         id: 5,
+        category: "dell",
         title: "Dell",
         model: "",
         price: "",
@@ -64,6 +69,7 @@ const data = [
     },
     {
         id: 6,
+        category: "dell",
         title: "Dell",
         model: "Latitude 5480",
         price: "",
@@ -77,6 +83,7 @@ const data = [
     },
     {
         id: 7,
+        category: "all-in-one",
         title: "PC All in One",
         model: "",
         price: "",
@@ -90,10 +97,11 @@ const data = [
     },
     {
         id: 8,
-        title: "Lenovo Thinkpade",
+        category: "lenovo",
+        title: "Lenovo ThinkPad",
         model: "Yoga",
         price: "",
-        description: "Écran intégré, design compact et élégant. Gain de place assuré.",
+        description: "Ultrabook polyvalent, écran tactile, design élégant et léger.",
         img: "../images/Lenovo/yoga/117.png",
         previews: [
             { img: "../images/Lenovo/yoga/115.png", label: "Vue 1" },
@@ -103,10 +111,11 @@ const data = [
     },
     {
         id: 9,
-        title: "Lenovo Thinkpade",
-        model: "X1 Carbonne",
+        category: "lenovo",
+        title: "Lenovo ThinkPad",
+        model: "X1 Carbon",
         price: "",
-        description: "Écran intégré, design compact et élégant. Gain de place assuré.",
+        description: "Ultraportable premium, léger et ultra-performant pour les professionnels.",
         img: "../images/Lenovo/X1_carbonne/113.png",
         previews: [
             { img: "../images/Lenovo/X1_carbonne/112.png", label: "Vue 1" },
@@ -116,58 +125,65 @@ const data = [
     },
     {
         id: 22,
+        category: "audio",
         title: "Ampli 30W",
         model: "",
         price: "",
-        description: "Amplificateur de song petit model de 30w.",
+        description: "Amplificateur de son, petit modèle de 30W.",
         img: "../images/5.jpg"
     },
     {
         id: 25,
+        category: "audio",
         title: "Ampli Zealot",
         model: "Zealot S127",
         price: "",
-        description: "Amplificateur de song petit model de 30w.",
+        description: "Amplificateur de son compact et puissant, modèle Zealot S127.",
         img: "../images/1111.webp"
     },
     {
         id: 26,
+        category: "audio",
         title: "Ampli Zealot",
         model: "Zealot ZE01",
         price: "",
-        description: "Amplificateur de song petit model de 30w.",
+        description: "Amplificateur de son compact et puissant, modèle Zealot ZE01.",
         img: "../images/1112.jpg"
     },
     {
         id: 30,
-        title: "TP Link",
+        category: "reseau",
+        title: "TP-Link",
         model: "Extendeur",
         price: "",
-        description: "Extendeur de réseau sans fil.",
+        description: "Extendeur de réseau sans fil, étend la portée de votre Wi-Fi.",
         img: "../images/3171_300mbps_.jpg"
     },
     {
         id: 31,
-        title: "TP Link",
-        model: "Repeteur",
+        category: "reseau",
+        title: "TP-Link",
+        model: "Répéteur",
         price: "",
-        description: "Etender votre réseau sans fil d'une grande distance.",
+        description: "Étendez votre réseau sans fil sur une grande distance.",
         img: "../images/repeater1.jpg"
     },
     {
         id: 32,
-        title: "Clé USB Bluetoof",
+        category: "reseau",
+        title: "Clé USB Bluetooth",
         model: "",
         price: "",
-        description: "Votre pc manque de pilote bluetoof ou vous n'avez pas de wifi sur votre pc.",
+        description: "Ajoutez le Bluetooth à votre PC facilement via USB.",
         img: "../images/blue-clef.jpg"
     },
     {
         id: 33,
-        title: "Clé USB Wifi",
-        model: "Carte Réseau exterieur en USB",
+        category: "reseau",
+        title: "Clé USB Wi-Fi",
+        model: "Carte Réseau USB",
         price: "",
-        description: "Votre pc manque de carte réseau ou votre signal wifi est faible, branché la clé.",
+        description: "Améliorez votre signal Wi-Fi ou ajoutez une carte réseau via USB.",
         img: "../images/802_1n.webp"
     },
 ];

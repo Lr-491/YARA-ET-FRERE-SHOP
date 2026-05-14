@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHOP | Electroniaue Shop</title>
+    <title>Boutique | Electronique Shop</title>
 
     <!--Link style  -->
     <link rel="stylesheet" href="../css/styles.css">
@@ -14,7 +14,7 @@
         <header class="header" id="header">
             <a href="../index.html" class="logo">
                 <span class="logo__icon">🖥</span>
-                <span class="logo__text">YALA SHOP</span>
+                <span class="logo__text">YARRA ET FRERE SHOP</span>
             </a>
 
             <nav class="nav">
@@ -36,6 +36,7 @@
 
             <div class="nav__overlay" id="nav-overlay"></div>
         </header>
+
         <!-- Modal Section -->
         <section class="modal hidden" id="modal">
             <div class="modal__content modal__content--product">
@@ -60,13 +61,42 @@
 
         <!-- Product section -->
         <section class="product">
-            <div>
+            <div class="product__header">
                 <h1>Nos Produits</h1>
-                <section class="search__input">
-                    <input type="text" class="search" id="searchInput" placeholder="Rechercher un produit">
-                </section>
+
+                <!-- Barre de recherche -->
+                <div class="search__input">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="🔍 Rechercher un produit..."
+                        autocomplete="off"
+                    >
+                </div>
+
+                <!-- Filtres par catégorie -->
+                <div class="filter-bar" id="filterBar">
+                    <button class="filter-btn active" data-category="tous">Tous</button>
+                    <button class="filter-btn" data-category="hp">HP</button>
+                    <button class="filter-btn" data-category="dell">Dell</button>
+                    <button class="filter-btn" data-category="lenovo">Lenovo</button>
+                    <button class="filter-btn" data-category="all-in-one">All in One</button>
+                    <button class="filter-btn" data-category="audio">Audio</button>
+                    <button class="filter-btn" data-category="reseau">Réseau</button>
+                </div>
+
+                <!-- Compteur de résultats -->
+                <p class="results-count" id="resultsCount"></p>
             </div>
-            <!-- Display product -->
+
+            <!-- Message aucun résultat -->
+            <div class="no-results hidden" id="noResults">
+                <span>😕</span>
+                <p>Aucun produit trouvé</p>
+                <small>Essayez un autre mot-clé ou une autre catégorie</small>
+            </div>
+
+            <!-- Grille produits -->
             <div id="product-container" class="product-container"></div>
         </section>
     </main>
@@ -75,7 +105,7 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-col">
-                <h4>YALA SERVICES SHOP</h4>
+                <h4>YARRA ET FRERE SERVICES SHOP</h4>
                 <p>La qualité branchée sur l'excellence. Votre partenaire en informatique.</p>
             </div>
             <div class="footer-col">
@@ -91,147 +121,191 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 YALA SERVICES SHOP. Tous droits réservés.</p>
+            <p>© 2025 YARRA ET FRERE SERVICES SHOP. Tous droits réservés.</p>
         </div>
     </footer>
 
     <script src="../js/data.js"></script>
     <script src="../js/nav.js"></script>
     <script>
-        const container = document.getElementById("product-container");
-        const modal = document.getElementById("modal");
-        const modalTitle = document.getElementById("modal__title");
-        const modalMainImage = document.getElementById("modal__main-image");
-        const modalThumbnails = document.getElementById("modal__thumbnails");
-        const modalDescription = document.getElementById("modal__description");
-        const modalWhatsappBtn = document.getElementById("modalWhatsappBtn");
-        let currentProductIndex = 0;
+        const container     = document.getElementById("product-container");
+        const modal         = document.getElementById("modal");
+        const modalTitle    = document.getElementById("modal__title");
+        const modalMainImage= document.getElementById("modal__main-image");
+        const modalThumbs   = document.getElementById("modal__thumbnails");
+        const modalDesc     = document.getElementById("modal__description");
+        const modalWABtn    = document.getElementById("modalWhatsappBtn");
+        const searchInput   = document.getElementById("searchInput");
+        const filterBtns    = document.querySelectorAll(".filter-btn");
+        const noResults     = document.getElementById("noResults");
+        const resultsCount  = document.getElementById("resultsCount");
 
-        // Génère le lien WhatsApp avec le produit et la quantité
+        let activeCategory  = "tous";   // catégorie active
+        let searchQuery     = "";       // texte de recherche
+
+        /* ── WhatsApp ─────────────────────────────────────────── */
         function getWhatsAppLink(product, quantity) {
             const priceText = product.price ? product.price.toLocaleString() + " FCFA" : "Sur devis";
-            const message = `Bonjour, je souhaite commander :%0A%0A*Produit :* ${product.title}%0A*Quantité :* ${quantity}%0A*Prix :* ${priceText}%0A%0AMerci !`;
-            return `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+            const msg = `Bonjour, je souhaite commander :%0A%0A*Produit :* ${product.title} ${product.model || ""}%0A*Quantité :* ${quantity}%0A*Prix :* ${priceText}%0A%0AMerci !`;
+            return `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
         }
 
-        function orderProduct(index) {
-            const product = data[index];
-            const qtyInput = document.getElementById(`qty${index}`);
-            const quantity = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
-            const url = getWhatsAppLink(product, quantity);
-            window.open(url, "_blank", "noopener,noreferrer");
-        }
+        /* ── Modal ────────────────────────────────────────────── */
+        function openModal(product) {
+            modalTitle.textContent = product.title + (product.model ? " " + product.model : "");
 
-        function openModal(product, index) {
-            currentProductIndex = index;
-            modalTitle.textContent = product.title;
-
-            // Galerie d'aperçus (previews ou ancien format imgs)
-            let previews = product.previews && product.previews.length > 0 
-                ? product.previews 
-                : null;
-            if (!previews && product.imgs && product.imgs.length > 0) {
-                previews = product.imgs
-                    .filter(p => p.img)
-                    .map((p, i) => ({ img: p.img, label: p.shape || "Vue " + (i + 1) }));
-            }
-            if (!previews || previews.length === 0) {
-                previews = [{ img: product.img, label: "Vue 1" }];
-            }
+            let previews = product.previews?.length
+                ? product.previews
+                : [{ img: product.img, label: "Vue 1" }];
 
             modalMainImage.innerHTML = `<img src="${previews[0].img}" alt="${product.title}">`;
 
-            modalThumbnails.innerHTML = previews.map((p, i) => `
-                <button type="button" class="modal__thumb ${i === 0 ? "active" : ""}" 
-                    data-img="${p.img}" data-index="${i}">
+            modalThumbs.innerHTML = previews.map((p, i) => `
+                <button type="button" class="modal__thumb ${i === 0 ? "active" : ""}"
+                    data-img="${p.img}">
                     <img src="${p.img}" alt="${p.label || "Vue " + (i + 1)}">
                 </button>
             `).join("");
 
-            modalThumbnails.querySelectorAll(".modal__thumb").forEach(btn => {
+            modalThumbs.querySelectorAll(".modal__thumb").forEach(btn => {
                 btn.addEventListener("click", () => {
-                    const img = btn.dataset.img;
-                    modalMainImage.innerHTML = `<img src="${img}" alt="${product.title}">`;
-                    modalThumbnails.querySelectorAll(".modal__thumb").forEach(b => b.classList.remove("active"));
+                    modalMainImage.innerHTML = `<img src="${btn.dataset.img}" alt="${product.title}">`;
+                    modalThumbs.querySelectorAll(".modal__thumb").forEach(b => b.classList.remove("active"));
                     btn.classList.add("active");
                 });
             });
 
-            modalDescription.textContent = product.description || "Demandez plus d'informations.";
-            const qtyInput = document.getElementById("modalQty");
-            qtyInput.value = 1;
-            qtyInput.oninput = () => {
-                const qty = parseInt(qtyInput.value) || 1;
-                modalWhatsappBtn.href = getWhatsAppLink(product, qty);
+            modalDesc.textContent = product.description || "Demandez plus d'informations.";
+
+            const modalQty = document.getElementById("modalQty");
+            modalQty.value = 1;
+            modalWABtn.href = getWhatsAppLink(product, 1);
+            modalQty.oninput = () => {
+                modalWABtn.href = getWhatsAppLink(product, parseInt(modalQty.value) || 1);
             };
-            modalWhatsappBtn.href = getWhatsAppLink(product, 1);
+
             modal.classList.remove("hidden");
+            document.body.style.overflow = "hidden";
         }
 
         function closeModal() {
             modal.classList.add("hidden");
+            document.body.style.overflow = "";
         }
 
-        function displayProduct(products) {
+        /* ── Filtrage & Recherche ─────────────────────────────── */
+        function getFilteredProducts() {
+            return data.filter(product => {
+                // Filtre catégorie
+                const matchCat = activeCategory === "tous" || product.category === activeCategory;
+
+                // Filtre recherche (titre + modèle + description)
+                const q = searchQuery.toLowerCase().trim();
+                const matchSearch = q === "" || [
+                    product.title,
+                    product.model,
+                    product.description
+                ].some(field => field && field.toLowerCase().includes(q));
+
+                return matchCat && matchSearch;
+            });
+        }
+
+        /* ── Affichage ────────────────────────────────────────── */
+        function displayProducts(products) {
             container.innerHTML = "";
 
-            products.forEach((product, index) => {
+            if (products.length === 0) {
+                noResults.classList.remove("hidden");
+                resultsCount.textContent = "";
+                return;
+            }
+
+            noResults.classList.add("hidden");
+            resultsCount.textContent = `${products.length} produit${products.length > 1 ? "s" : ""} trouvé${products.length > 1 ? "s" : ""}`;
+
+            products.forEach((product) => {
                 const priceDisplay = product.price ? product.price.toLocaleString() + " FCFA" : "Sur devis";
                 const card = document.createElement("div");
                 card.className = "product-card";
                 card.innerHTML = `
-                    <img src="${product.img}" alt="${product.title}">
+                    <img src="${product.img}" alt="${product.title} ${product.model || ""}">
                     <h3>${product.title}</h3>
-                    <h3>${product.model}</h3>
+                    ${product.model ? `<h3>${product.model}</h3>` : ""}
                     <p>${product.description || ""}</p>
                     <p class="price">${priceDisplay}</p>
                     <label>Quantité :</label>
-                    <input type="number" min="1" value="1" id="qty${index}">
-                    <button class="open__modal" data-index="${index}">Voir plus</button>
-                    <a href="#" class="btn-order btn-order--whatsapp" data-index="${index}"> Commander via WhatsApp</a>
+                    <input type="number" min="1" value="1" id="qty${product.id}">
+                    <button class="open__modal">Voir plus</button>
+                    <a href="#" class="btn-order btn-order--whatsapp">Commander via WhatsApp</a>
                 `;
+
+                // Événements de la carte
+                card.querySelector(".open__modal").addEventListener("click", (e) => {
+                    e.preventDefault();
+                    openModal(product);
+                });
+
+                card.querySelector(".btn-order--whatsapp").addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const qty = parseInt(card.querySelector(`#qty${product.id}`).value) || 1;
+                    window.open(getWhatsAppLink(product, qty), "_blank", "noopener,noreferrer");
+                });
+
                 container.appendChild(card);
             });
 
-            document.querySelectorAll(".open__modal").forEach(btn => {
-                btn.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    const index = parseInt(e.currentTarget.dataset.index);
-                    openModal(products[index], index);
-                });
-            });
+            // Animation d'apparition
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("show");
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                },
+                { threshold: 0.1 }
+            );
 
-            document.querySelectorAll(".btn-order--whatsapp").forEach(btn => {
-                btn.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    const index = parseInt(e.currentTarget.dataset.index);
-                    orderProduct(index);
-                });
-            });
+            setTimeout(() => {
+                container.querySelectorAll(".product-card").forEach(card => observer.observe(card));
+            }, 50);
         }
 
-        displayProduct(data);
+        function applyFilters() {
+            displayProducts(getFilteredProducts());
+        }
 
-        document.getElementById("closeModalBtn").addEventListener("click", closeModal);
-        document.getElementById("modal").addEventListener("click", (e) => {
-            if (e.target.id === "modal") closeModal();
+        /* ── Événements ───────────────────────────────────────── */
+
+        // Filtres catégorie
+        filterBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                filterBtns.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                activeCategory = btn.dataset.category;
+                applyFilters();
+            });
         });
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("show");
-                        observer.unobserve(entry.target);
-                    }
-                });
-            },
-            { threshold: 0.2 }
-        );
+        // Recherche en temps réel (avec léger délai pour les performances)
+        let searchTimer;
+        searchInput.addEventListener("input", () => {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                searchQuery = searchInput.value;
+                applyFilters();
+            }, 250);
+        });
 
-        setTimeout(() => {
-            document.querySelectorAll(".product-card").forEach(card => observer.observe(card));
-        }, 100);
+        // Fermeture modal
+        document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+        modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+        document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+
+        /* ── Initialisation ───────────────────────────────────── */
+        applyFilters();
     </script>
 </body>
 </html>
