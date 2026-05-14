@@ -1234,6 +1234,55 @@ main .product .btn-order:hover {
     background: linear-gradient(180deg, rgba(30, 58, 95, 0.08) 0%, rgba(30, 58, 95, 0.02) 100%);
 }
 
+/* Chiffres clés */
+.about-stats {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    padding: 60px 40px !important;
+    max-width: 100% !important;
+    margin-top: 50px;
+}
+
+.about-stats .section-title {
+    color: white;
+    margin-bottom: 2rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-4px);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: var(--font-bold);
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: var(--font-medium);
+}
+
 .about-cta h2 {
     margin-bottom: 0.75rem;
     font-size: 1.75rem;
@@ -1502,6 +1551,19 @@ main .product .btn-order:hover {
 
     .about-section {
         padding: 40px 24px;
+    }
+
+    .about-stats {
+        padding: 40px 24px !important;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .stat-number {
+        font-size: 2rem;
     }
 
     .footer-content {
