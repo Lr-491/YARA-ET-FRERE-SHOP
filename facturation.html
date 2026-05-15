@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facturation | YARRA ET FRERE SHOP</title>
+    <link rel="stylesheet" href="./css/facturationsStyles.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="page-header">
+    <div class="logo">YARRA ET FRERE SHOP — Facturation</div>
+    <a href="../index.html" class="back-link">← Retour au site</a>
+</header>
+
+<div class="app">
+
+    <!-- ── Formulaire ── -->
+    <div class="card">
+        <div class="card__head">Nouvelle Facture</div>
+        <div class="card__body">
+
+            <!-- Infos client -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Nom du client *</label>
+                    <input type="text" id="clientName" placeholder="Ex : Jean Dupont">
+                </div>
+                <div class="form-group">
+                    <label>Téléphone</label>
+                    <input type="text" id="clientPhone" placeholder="Ex : 06 00 00 00 00">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Date de la facture</label>
+                <input type="date" id="invoiceDate">
+            </div>
+
+            <!-- Lignes produits -->
+            <div class="form-group">
+                <label>Produits</label>
+                <div class="items-list" id="itemsList"></div>
+                <button class="btn-add-item" id="btnAddItem">+ Ajouter un produit</button>
+            </div>
+
+            <!-- Total -->
+            <div class="total-box">
+                <span>Total TTC</span>
+                <span class="total-amount" id="totalDisplay">0 FCFA</span>
+            </div>
+
+            <!-- Notes -->
+            <div class="form-group">
+                <label>Notes / Remarques</label>
+                <input type="text" id="invoiceNote" placeholder="Ex : Payé en espèces, livraison prévue...">
+            </div>
+
+            <!-- Actions -->
+            <div class="btn-actions">
+                <button class="btn btn-primary" id="btnGenerate">Générer</button>
+                <button class="btn btn-accent" id="btnPrint">Imprimer</button>
+                <button class="btn btn-green" id="btnSave">Valider vente</button>
+                <button class="btn btn-outline" id="btnReset">Effacer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Aperçu Facture ── -->
+    <div class="card">
+        <div class="card__head">Aperçu de la facture</div>
+        <div class="card__body">
+            <div id="printArea">
+                <div class="invoice-preview" id="invoicePreview">
+                    <div class="inv-placeholder">
+                        <span>📄</span>
+                        <p>Remplissez le formulaire et cliquez sur <strong>Générer</strong> pour prévisualiser la facture.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Suivi Journalier ── -->
+    <div class="card suivi">
+        <div class="card__head">Suivi des ventes — <span id="todayLabel"></span></div>
+        <div class="card__body">
+
+            <!-- Stats -->
+            <div class="suivi-stats">
+                <div class="stat-box">
+                    <div class="stat-val" id="statCount">0</div>
+                    <div class="stat-lbl">Ventes du jour</div>
+                </div>
+                <div class="stat-box green">
+                    <div class="stat-val" id="statTotal">0</div>
+                    <div class="stat-lbl">Total FCFA</div>
+                </div>
+                <div class="stat-box orange">
+                    <div class="stat-val" id="statAvg">0</div>
+                    <div class="stat-lbl">Panier moyen</div>
+                </div>
+            </div>
+
+            <!-- Tableau -->
+            <div class="table-wrap">
+                <table class="sales-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Heure</th>
+                            <th>N° Facture</th>
+                            <th>Client</th>
+                            <th>Téléphone</th>
+                            <th>Produits</th>
+                            <th>Total</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody id="salesBody">
+                        <tr>
+                            <td colspan="8">
+                                <div class="empty-state">
+                                    <span>📭</span>
+                                    <p>Aucune vente enregistrée pour aujourd'hui.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Actions suivi -->
+            <div class="suivi-actions">
+                <button class="btn btn-green" id="btnExcel">Exporter Excel</button>
+                <button class="btn btn-outline" id="btnClearSales" style="color:var(--red);border-color:var(--red);">🗑️ Vider le suivi</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"> <span id="toastMsg">Action effectuée</span></div>
+
+<!-- SheetJS pour export Excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<!-- data.js du projet -->
+<script src="../js/data.js"></script>
+
+<script src="./js/facturation.js"></script>
+</body>
+</html>

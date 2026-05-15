@@ -1,5 +1,5 @@
-// Numéro WhatsApp (format international sans +)
-const WHATSAPP_NUMBER = "2250000000000";
+// Numéro WhatsApp (format international)
+const WHATSAPP_NUMBER = "242053797474";
 
 const data = [
     {

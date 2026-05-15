@@ -129,7 +129,7 @@ input {
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
-    min-height: 70px;
+    min-height: 150px;
     box-shadow: var(--shadow-md);
     transition: var(--transition);
 }
@@ -196,7 +196,7 @@ input {
 .nav__link {
     padding: 10px 18px;
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 1.5rem;
     border-radius: 10px;
     transition: var(--transition);
 }
@@ -291,7 +291,7 @@ main {
 
 main .hero .hero-content img {
     width: 500px;
-    height: 300px;
+    height: 400px;
     object-fit: contain;
     transition: var(--transition-slow);
     animation: fadeInUp 0.8s ease-out;
@@ -313,7 +313,7 @@ main .hero .hero-content .slider .cont-slides span {
     border-radius: 8px;
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     color: white;
-    font-size: 2rem;
+    font-size: 3rem;
     margin-right: 8px;
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
@@ -325,7 +325,7 @@ main .hero .hero-content .slider .cont-slides span:hover {
 }
 
 main .hero .hero-content .slider .cont-slides p {
-    font-size: 1.25rem;
+    font-size: 2rem;
     font-weight: var(--font-medium);
     margin-top: 0.5rem;
 }
@@ -344,7 +344,7 @@ main .hero .hero-content .slider .cont-slides p {
 .content__1 .info,
 .content__2 .info,
 .content__3 .info {
-    flex: 1;
+    /* flex: 1; */
     min-width: 280px;
 }
 
@@ -490,15 +490,14 @@ main .hero .hero-content .content.active {
 }
 
 .cta {
-    width: 220px;
-    height: 52px;
     border-radius: 12px;
     background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
     color: white;
-    font-size: 1rem;
+    font-size: 1.50rem;
     font-weight: 600;
     transition: var(--transition);
     box-shadow: var(--shadow-sm);
+    padding: 10px 20px;
 }
 
 .cta:hover {
@@ -1239,7 +1238,6 @@ main .product .btn-order:hover {
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     padding: 60px 40px !important;
     max-width: 100% !important;
-    margin-top: 50px;
 }
 
 .about-stats .section-title {
@@ -1446,7 +1444,7 @@ main .product .btn-order:hover {
         align-items: center;
         justify-content: center;
         min-height: auto;
-        padding: 1.25rem 1rem 3rem;
+        padding: 1.25rem 1rem 3.5rem;
         gap: 1rem;
     }
 
@@ -1466,13 +1464,13 @@ main .product .btn-order:hover {
     }
 
     main .hero .hero-content .slider {
-        min-height: auto;
+        min-height: 480px;
         margin: 1rem auto 0;
         padding: 0 0.5rem;
     }
 
     main .hero .hero-content .cont-slides {
-        min-height: 380px;
+        min-height: 480px;
     }
 
     main .hero .hero-content .slider .cont-slides h2 {
@@ -1581,12 +1579,13 @@ main .product .btn-order:hover {
     }
 
     main .hero .hero-content .cont-slides {
-        min-height: 340px;
+        min-height: 420px;
     }
 
     main .hero .hero-content img {
         max-width: 220px;
         height: 150px;
+        margin: 0 auto;
     }
 
     main .hero .hero-content .slider .cont-slides h2 {
